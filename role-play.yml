@@ -1,0 +1,9 @@
+# ansible-playbook -i inventory.ansible.conf role-play.yml
+
+- name: Role - install inkscape
+  hosts: i_local
+  become: True # sudo
+
+  # see ./roles/inkscape-role/tasks/main.yml
+  roles:
+  - inkscape-role 

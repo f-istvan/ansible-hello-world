@@ -1,0 +1,35 @@
+# To run this playbook run:
+# ansible-playbook -i inventory.ansible.conf newplay.yml --extra-vars test_var=Stefan
+
+- name: Example playbook
+  hosts: i_local
+  become: True # sudo
+  tasks:
+
+  - name: "Print ansible_facts"
+    debug:
+      var: ansible_facts
+
+  - name: "Running the debug thingie"
+    debug:
+      msg: "hello {{ test_var }}"
+
+  - name: "Copy file"
+    copy:
+      src: /etc/passwd
+      dest: /tmp/passwd
+
+  - name: "Install vim"
+    apt:
+      name:
+      - vim
+
+  - name: "Check if docker installed"
+    shell: docker -v
+    register: docker_exists_cmd
+    ignore_errors: True
+    changed_when: False
+
+  - name: "Debug docker exists"
+    debug:
+      var: docker_exists_cmd
